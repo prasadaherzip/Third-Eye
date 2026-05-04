@@ -1,8 +1,8 @@
-# 👁️ Third Eye - Threat Detection System (Nullmask Edition)
+# Third Eye - Threat Detection System (Nullmask Edition)
 
 A comprehensive, full-stack machine learning application designed for real-time cybersecurity threat analysis. Third Eye provides a centralized interface for detecting malicious URLs, identifying spam/phishing emails, and catching AI prompt injection attacks.
 
-## 🚀 Features
+## Features
 
 - **URL Analysis**: Scans URLs and provides real-time intelligence including IP Geolocation, Domain Age, and URLhaus threat status.
 - **Deep Network Intelligence**: Extended integration with IP-API to fetch detailed Location Information (Coordinates, Region) and Network Details (ASN, Organization, ISP).
@@ -12,7 +12,7 @@ A comprehensive, full-stack machine learning application designed for real-time 
 - **Sleek Cyberpunk UI**: A dynamic, dark-themed frontend ("Nullmask Edition") with neon glow badges, raw JSON toggles, and CSV export capabilities for session history.
 - **FastAPI Backend**: A highly performant and robust Python backend to handle machine learning inference and external API requests seamlessly.
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 **Frontend:**
 - HTML5 / CSS3 (Vanilla)
@@ -27,7 +27,7 @@ A comprehensive, full-stack machine learning application designed for real-time 
 - NLTK (Natural Language Toolkit)
 - Requests (External Threat Intelligence APIs)
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 Third_Eye_V2/
@@ -50,7 +50,7 @@ Third_Eye_V2/
 └── Notebooks/                   # Jupyter notebooks for model training/clustering
 ```
 
-## ⚙️ Setup & Installation
+## Setup & Installation
 
 ### 1. Prerequisites
 Ensure you have Python 3 installed. You will also need to install the required Python packages.
