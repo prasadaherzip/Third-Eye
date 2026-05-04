@@ -1,4 +1,4 @@
-# Third Eye - Threat Detection System (Nullmask Edition)
+# Third Eye - Threat Detection System
 
 A comprehensive, full-stack machine learning application designed for real-time cybersecurity threat analysis. Third Eye provides a centralized interface for detecting malicious URLs, identifying spam/phishing emails, and catching AI prompt injection attacks.
 
