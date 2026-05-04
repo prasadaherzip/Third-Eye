@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Third Eye | Nullmask Edition</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="grid-bg"></div>
+    <nav class="navbar">
+        <div class="logo">
+            <span class="bracket">[</span> THIRDEYE <span class="bracket">]</span>
+        </div>
+        <div class="nav-tabs">
+            <button class="nav-btn active" id="tab-scanner" onclick="switchTab('scanner')">SCANNER</button>
+            <button class="nav-btn" id="tab-learn" onclick="switchTab('learn')">LEARN SECURITY</button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div id="scanner-section">
+            <header class="hero">
+                <h1>ANALYZE. <br> DETECT. <br> SECURE.</h1>
+                <p class="mono-text">// Comprehensive threat analysis for URLs, Emails, and Prompt Injections.</p>
+            </header>
+
+            <section class="analyzers-grid">
+                <!-- URL Analyzer -->
+                <div class="analyzer-card">
+                    <div class="card-header">
+                        <span class="mono-text tag">TYPE: URL_SCAN</span>
+                    </div>
+                    <div class="card-body">
+                        <input type="text" id="url-input" class="tech-input" placeholder="Enter target URL...">
+                        <button class="tech-btn" onclick="analyze('url')">INITIATE_SCAN</button>
+                    </div>
+                </div>
+
+                <!-- Email Analyzer -->
+                <div class="analyzer-card">
+                    <div class="card-header">
+                        <span class="mono-text tag">TYPE: EMAIL_SCAN</span>
+                    </div>
+                    <div class="card-body">
+                        <textarea id="email-input" class="tech-input"
+                            placeholder="Paste email headers and body..."></textarea>
+                        <button class="tech-btn" onclick="analyze('email')">INITIATE_SCAN</button>
+                    </div>
+                </div>
+
+                <!-- Prompt Analyzer -->
+                <div class="analyzer-card">
+                    <div class="card-header">
+                        <span class="mono-text tag">TYPE: PROMPT_SCAN</span>
+                    </div>
+                    <div class="card-body">
+                        <textarea id="prompt-input" class="tech-input" placeholder="Enter AI prompt text..."></textarea>
+                        <button class="tech-btn" onclick="analyze('prompt')">INITIATE_SCAN</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="results-dashboard" class="results-dashboard hidden">
+                <div class="dashboard-header">
+                    <h2>ANALYSIS_RESULTS</h2>
+                    <span class="status-indicator blinking">LIVE</span>
+                </div>
+
+                <div class="severity-badge-container">
+                    <div id="severity-badge" class="severity-badge">SAFE</div>
+                    <div id="severity-text" class="mono-text">Awaiting input analysis...</div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="result-panel">
+                        <div class="panel-title mono-text">CONFIDENCE_LEVEL</div>
+                        <div class="confidence-score">
+                            <span id="score-val">87</span>%
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="result-panel">
+                        <div class="panel-title mono-text">REASONS_DETECTED</div>
+                        <div class="tags-container">
+                            <span class="tech-tag alert">[ SUSPICIOUS_DOMAIN ]</span>
+                            <span class="tech-tag alert">[ URGENCY_PATTERN ]</span>
+                            <span class="tech-tag">[ OBFUSCATION ]</span>
+                        </div>
+                    </div>
+
+                    <div class="result-panel" id="threat-intel-panel">
+                        <div class="panel-title mono-text">THREAT_INTELLIGENCE</div>
+                        <div class="threat-intel-content mono-text" id="threat-intel-content">
+                            > Awaiting scan data...
+                        </div>
+                    </div>
+
+                    <div class="result-panel full-width hidden" id="location-panel">
+                        <div class="panel-title mono-text">LOCATION_INFO</div>
+                        <table class="model-table mono-text">
+                            <tbody id="location-content">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="result-panel full-width hidden" id="network-panel">
+                        <div class="panel-title mono-text">NETWORK_INFO</div>
+                        <table class="model-table mono-text">
+                            <tbody id="network-content">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="result-panel full-width hidden" id="preventive-panel">
+                        <div class="panel-title mono-text">PREVENTIVE_ACTIONS</div>
+                        <ul class="mono-text" style="text-align: left; padding-left: 2rem; color: var(--text);">
+                            <li>Do not click unknown links</li>
+                            <li>Verify domain spelling</li>
+                            <li>Use antivirus tools</li>
+                            <li>Avoid entering credentials</li>
+                        </ul>
+                    </div>
+
+                    <div class="result-panel full-width hidden" id="raw-json-panel">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div class="panel-title mono-text" style="margin-bottom: 0;">RAW_API_RESPONSE</div>
+                            <button class="nav-btn" onclick="toggleRawJson()"
+                                style="font-size: 0.8rem; padding: 0.3rem 0.8rem;">SHOW / HIDE</button>
+                        </div>
+                        <pre id="raw-json-content" class="mono-text hidden"
+                            style="text-align: left; background: rgba(0,0,0,0.3); padding: 1rem; border: 1px solid var(--accent-color); overflow-x: auto; color: #a3ff00;"></pre>
+                    </div>
+
+                    <div class="result-panel">
+                        <div class="panel-title mono-text">MULTI_MODEL_COMPARISON</div>
+                        <table class="model-table mono-text">
+                            <thead>
+                                <tr>
+                                    <th>MODEL</th>
+                                    <th>PREDICTION</th>
+                                    <th>CONFIDENCE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="multi-model-content">
+                                <tr>
+                                    <td colspan="3" style="text-align: center; padding: 1rem;">Awaiting models...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="result-panel full-width">
+                        <div class="panel-title mono-text">OUTPUT_ANALYSIS</div>
+                        <div class="terminal-window">
+                            <div class="terminal-content">
+                                > Initiating ML pattern match...<br>
+                                > Loading weights... [OK]<br>
+                                > Cross-referencing database...<br>
+                                > Warning: Similar structural pattern found in known phishing campaigns.<br>
+                                > Confidence metric threshold exceeded.<br>
+                                > STATUS: <span style="color: var(--alert)">MALICIOUS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scan History Section -->
+            <section class="results-dashboard" style="margin-top: 4rem;">
+                <div class="dashboard-header">
+                    <h2>SCAN_HISTORY</h2>
+                    <div class="history-controls" style="display: flex; gap: 1rem;">
+                        <button class="nav-btn" onclick="exportHistoryCSV()">EXPORT CSV</button>
+                        <button class="nav-btn" style="color: var(--alert); border-color: var(--alert);"
+                            onclick="clearHistory()">CLEAR</button>
+                    </div>
+                </div>
+                <div class="history-table-container">
+                    <table class="model-table mono-text" id="history-table">
+                        <thead>
+                            <tr>
+                                <th>TIMESTAMP</th>
+                                <th>TYPE</th>
+                                <th>RESULT</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-content">
+                            <tr>
+                                <td colspan="3" style="text-align: center; padding: 1rem;">No history found.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div> <!-- End scanner-section -->
+
+        <!-- Learn Security Section -->
+        <div id="learn-security-section" style="margin-top: 6rem;">
+            <header class="hero">
+                <h1>LEARN. <br> ADAPT. <br> PROTECT.</h1>
+                <p class="mono-text">// Master the principles of digital self-defense.</p>
+            </header>
+
+            <section class="analyzers-grid">
+                <div class="analyzer-card">
+                    <div class="card-header">
+                        <span class="mono-text tag">MODULE: URL_SAFETY</span>
+                    </div>
+                    <div class="card-body"
+                        style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <p class="mono-text">Learn how to identify phishing links, deceptive domains, and URL
+                            obfuscation techniques. Protect yourself from malicious redirects.</p>
+                        <a href="https://www.nature.com/articles/s41598-025-26653-2" target="_blank" class="tech-btn"
+                            style="text-decoration: none; text-align: center; display: block;">LEARN_MORE</a>
+                    </div>
+                </div>
+
+                <div class="analyzer-card">
+                    <div class="card-header">
+                        <span class="mono-text tag">MODULE: EMAIL_DEFENSE</span>
+                    </div>
+                    <div class="card-body"
+                        style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <p class="mono-text">Discover the common indicators of compromise in email headers, urgency
+                            patterns, and spoofed senders used in social engineering.</p>
+                        <a href="https://www.legalserviceindia.com/legal/article-9288-a-study-on-phishing-attacks.html"
+                            target="_blank" class="tech-btn"
+                            style="text-decoration: none; text-align: center; display: block;">LEARN_MORE</a>
+                    </div>
+                </div>
+
+                <div class="analyzer-card">
+                    <div class="card-header">
+                        <span class="mono-text tag">MODULE: AI_SECURITY</span>
+                    </div>
+                    <div class="card-body"
+                        style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <p class="mono-text">Understand how attackers manipulate LLMs through prompt injection and learn
+                            defensive strategies against adversarial inputs.</p>
+                        <a href="https://www.redhat.com/en/blog/ai-security-defending-against-prompt-injection-and-unsafe-actions"
+                            target="_blank" class="tech-btn"
+                            style="text-decoration: none; text-align: center; display: block;">READ_GUIDE</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
