@@ -52,14 +52,14 @@ Third_Eye_V2/
 
 ## Setup & Installation
 
-### 1. Prerequisites
+### 1.Prerequisites
 Ensure you have Python 3 installed. You will also need to install the required Python packages.
 
 ```bash
 pip install fastapi uvicorn scikit-learn pydantic joblib nltk requests python-whois python-dateutil
 ```
 
-### 2. Running the Application
+### 2.Running the Application
 
 1. Open a terminal and navigate to the backend directory:
    ```bash
