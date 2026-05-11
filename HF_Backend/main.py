@@ -21,6 +21,12 @@ try:
 except ImportError:
     whois = None
 
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+MODEL_DIR = BASE_DIR / "toPickleFiles"
+
+
 # NLTK requirements for email cleaning
 import nltk
 from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
@@ -203,9 +209,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-MODELS_DIR = BASE_DIR / "toPickleFiles"
-
 def load_model(path: Path):
     if path.exists():
         return joblib.load(path)
@@ -214,19 +217,19 @@ def load_model(path: Path):
 
 # Load Models
 # 1. Email
-email_vec = load_model(MODELS_DIR / "email_models" / "vectorizer_email.pkl")
-email_lr = load_model(MODELS_DIR / "email_models" / "lr_model_email.pkl")
+email_vec = load_model(MODEL_DIR / "email_models" / "vectorizer_email.pkl")
+email_lr = load_model(MODEL_DIR / "email_models" / "lr_model_email.pkl")
 email_feature_names = email_vec.get_feature_names_out() if email_vec else []
 
 # 2. URL
-url_vec = load_model(MODELS_DIR / "url_models" / "url_vectorizer.pkl")
-url_lr = load_model(MODELS_DIR / "url_models" / "url_lr_model.pkl")
-url_le = load_model(MODELS_DIR / "url_models" / "url_label_encoder.pkl")
+url_vec = load_model(MODEL_DIR / "url_models" / "url_vectorizer.pkl")
+url_lr = load_model(MODEL_DIR / "url_models" / "url_lr_model.pkl")
+url_le = load_model(MODEL_DIR / "url_models" / "url_label_encoder.pkl")
 url_feature_names = url_vec.get_feature_names_out() if url_vec else []
 
 # 3. Prompt
-prompt_vec = load_model(MODELS_DIR / "prompt_models" / "prompt_vectorizer.pkl")
-prompt_lr = load_model(MODELS_DIR / "prompt_models" / "prompt_lr.pkl")
+prompt_vec = load_model(MODEL_DIR / "prompt_models" / "prompt_vectorizer.pkl")
+prompt_lr = load_model(MODEL_DIR / "prompt_models" / "prompt_lr.pkl")
 prompt_feature_names = prompt_vec.get_feature_names_out() if prompt_vec else []
 
 class PredictRequest(BaseModel):

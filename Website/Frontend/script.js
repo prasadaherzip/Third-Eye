@@ -1,5 +1,5 @@
 // IMPORTANT: Replace this URL with your actual deployed Render backend URL
-const BACKEND_URL = "https://your-backend-name.onrender.com"; // e.g., https://thirdeye-api.onrender.com
+const BACKEND_URL = "https://tronic2351-thirdeyebackend.hf.space";
 // For local development, uncomment the line below:
 // const BACKEND_URL = "http://127.0.0.1:8000";
 
@@ -86,7 +86,7 @@ function animateTerminalSequence() {
             "> Running ML models...",
             "> Finalizing results..."
         ];
-        
+
         let i = 0;
         function showNext() {
             if (i < messages.length) {
@@ -106,11 +106,11 @@ async function analyze(type) {
     const e = window.event;
     const btn = e ? e.target : document.querySelector(`button[onclick="analyze('${type}')"]`);
     const originalText = btn.innerText;
-    
+
     const dashboard = document.getElementById('results-dashboard');
     const progressFill = document.querySelector('.progress-fill');
     const scoreVal = document.getElementById('score-val');
-    
+
     // Get the input text
     const inputElement = document.getElementById(`${type}-input`);
     const textValue = inputElement.value.trim();
@@ -119,13 +119,13 @@ async function analyze(type) {
         alert("Please enter some text to analyze.");
         return;
     }
-    
+
     // Reset dashboard state
     dashboard.classList.remove('hidden');
     dashboard.style.display = 'block';
     progressFill.style.width = '0%';
     scoreVal.innerText = '0';
-    
+
     // Hide severity badge initially
     const badge = document.getElementById('severity-badge');
     badge.className = 'severity-badge'; // reset classes
@@ -137,10 +137,10 @@ async function analyze(type) {
     btn.style.background = 'transparent';
     btn.style.border = '1px solid var(--accent)';
     btn.style.color = 'var(--accent)';
-    
+
     // Run terminal animation while fetching
     const animationPromise = animateTerminalSequence();
-    
+
     // Call FastAPI backend
     const fetchPromise = fetch(`${BACKEND_URL}/predict/${type}`, {
         method: 'POST',
@@ -169,7 +169,7 @@ async function analyze(type) {
     }
 
     const prediction = data.prediction;
-    
+
     // Determine Threat Level and Colors
     let isThreat = false;
     let threatLevel = "SAFE";
@@ -196,19 +196,19 @@ async function analyze(type) {
         badgeClass = "safe";
         statusText = "No threats detected in the input.";
     }
-    
+
     // Update Severity Badge
     badge.innerText = threatLevel;
     badge.classList.add(badgeClass, 'show');
     severityText.innerText = statusText;
-    
+
     // Update terminal output to show prediction with color
     const terminalContent = document.querySelector('.terminal-content');
     terminalContent.innerHTML += `
         > Result computed.<br>
         > STATUS: <span style="color: ${threatColor}; font-weight: bold;">${threatLevel}</span>
     `;
-    
+
     // Update flags
     const tagsContainer = document.querySelector('.tags-container');
     let tagsHTML = "";
@@ -217,7 +217,7 @@ async function analyze(type) {
             tagsHTML += `<span class="tech-tag" style="color: ${threatColor}; border-color: ${threatColor}">[ ${kw.toUpperCase()} ]</span> `;
         });
     }
-    
+
     if (isThreat) {
         if (!tagsHTML) {
             tagsHTML = `
@@ -236,12 +236,12 @@ async function analyze(type) {
         progressFill.style.backgroundColor = "var(--accent)";
     }
     tagsContainer.innerHTML = tagsHTML;
-    
+
     // Populate Threat Intelligence
     populateThreatIntel(type, data);
 
     // Populate Multi-Model Table
-    const confidence = Math.floor(Math.random() * 15) + 85; 
+    const confidence = Math.floor(Math.random() * 15) + 85;
     populateMultiModel(prediction, confidence);
 
     // Animate progress bar and score
@@ -249,7 +249,7 @@ async function analyze(type) {
         progressFill.style.width = `${confidence}%`;
         animateValue(scoreVal, 0, confidence, 1500);
     }, 300);
-    
+
     // Add to history
     addHistoryRecord(type.toUpperCase(), threatLevel);
 
@@ -279,13 +279,13 @@ function populateThreatIntel(type, data) {
     const netPanel = document.getElementById('network-panel');
     const prevPanel = document.getElementById('preventive-panel');
     const jsonPanel = document.getElementById('raw-json-panel');
-    
+
     // Reset display
-    if(intelPanel) intelPanel.classList.remove('hidden');
-    if(locPanel) locPanel.classList.add('hidden');
-    if(netPanel) netPanel.classList.add('hidden');
-    if(prevPanel) prevPanel.classList.add('hidden');
-    if(jsonPanel) jsonPanel.classList.add('hidden');
+    if (intelPanel) intelPanel.classList.remove('hidden');
+    if (locPanel) locPanel.classList.add('hidden');
+    if (netPanel) netPanel.classList.add('hidden');
+    if (prevPanel) prevPanel.classList.add('hidden');
+    if (jsonPanel) jsonPanel.classList.add('hidden');
 
     if (type === 'url' && data && data.intelligence && data.intelligence.location_info) {
         intelPanel.classList.add('hidden');
@@ -348,7 +348,7 @@ function populateMultiModel(mainPrediction, mainConfidence) {
     const tableBody = document.getElementById('multi-model-content');
     let altPred1 = mainPrediction;
     let altPred2 = mainPrediction;
-    
+
     // Introduce slight variation for realism
     let conf1 = Math.max(0, mainConfidence - Math.floor(Math.random() * 10));
     let conf2 = Math.min(100, mainConfidence + Math.floor(Math.random() * 8));
@@ -389,7 +389,7 @@ function addHistoryRecord(type, result) {
 function renderHistory() {
     let history = JSON.parse(sessionStorage.getItem('scanHistory')) || [];
     const historyContent = document.getElementById('history-content');
-    
+
     if (history.length === 0) {
         historyContent.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 1rem;">No history found.</td></tr>';
         return;
@@ -400,7 +400,7 @@ function renderHistory() {
         let color = "var(--accent)";
         if (item.result === "MALICIOUS") color = "var(--alert)";
         if (item.result === "SUSPICIOUS") color = "#FFB347";
-        
+
         historyContent.innerHTML += `
             <tr>
                 <td>${item.timestamp}</td>
@@ -422,12 +422,12 @@ function exportHistoryCSV() {
         alert("No history to export.");
         return;
     }
-    
+
     let csvContent = "data:text/csv;charset=utf-8,TIMESTAMP,TYPE,RESULT\n";
     history.forEach(row => {
         csvContent += `${row.timestamp},${row.type},${row.result}\n`;
     });
-    
+
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
