@@ -1,8 +1,8 @@
-# 👁️ Third Eye - Threat Detection System (Nullmask Edition)
+# Third Eye - Threat Detection System
 
 A comprehensive, full-stack machine learning application designed for real-time cybersecurity threat analysis. Third Eye provides a centralized interface for detecting malicious URLs, identifying spam/phishing emails, and catching AI prompt injection attacks.
 
-## 🚀 Features
+## Features
 
 - **URL Analysis**: Scans URLs and provides real-time intelligence including IP Geolocation, Domain Age, and URLhaus threat status.
 - **Deep Network Intelligence**: Extended integration with IP-API to fetch detailed Location Information (Coordinates, Region) and Network Details (ASN, Organization, ISP).
@@ -30,7 +30,7 @@ A comprehensive, full-stack machine learning application designed for real-time 
 ## 📁 Project Structure
 
 ```text
-Third_Eye_V2/
+Third_Eye_V3/
 │
 ├── Website/
 │   ├── Backend/
@@ -71,13 +71,13 @@ pip install fastapi uvicorn scikit-learn pydantic joblib nltk requests python-wh
    ```
 3. Look at your terminal output! You will see a clickable link (e.g., `http://127.0.0.1:8000`). Click that link to open the frontend interface directly in your browser.
 
-## 🧠 Machine Learning Models
+## Machine Learning Models
 
 - **URL Model**: Trained on benign and malicious URLs, utilizing TF-IDF vectorization and Logistic Regression.
 - **Email Model**: Trained on large datasets of spam and ham emails, utilizing text stemming (NLTK) and Logistic Regression.
 - **Prompt Model**: Detects prompt injection techniques by analyzing syntactical patterns common in adversarial prompts.
 
-## 🛡️ Third-Party Intelligence Integration
+## Third-Party Intelligence Integration
 
 The URL scanning module actively fetches live data to enhance its prediction confidence:
 - **IP-API**: For deep IP profiling, ASN lookups, and geolocation.
