@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+joblib
+scikit-learn
+nltk
+python-dateutil
+requests
+pydantic
+python-whois
+numpy
